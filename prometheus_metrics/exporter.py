@@ -89,7 +89,7 @@ class exporter:
         self.metrics_handler = metrics_handler()
         self.httpd = None
 
-    def make_wsgi_app():
+    def make_wsgi_app(self):
         return make_wsgi_app()
 
     def make_server(self, interface, port):
