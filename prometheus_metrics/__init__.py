@@ -20,7 +20,7 @@
 #   SOFTWARE.
 
 
-__VERSION__ = '0.1.2'
+__VERSION__ = '0.1.2.1'
 __AUTHOR__ = 'Daniel Schmitz'
 __NAME__ = 'prometheus_metrics'
 
