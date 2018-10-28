@@ -21,12 +21,13 @@
 
 from prometheus_client import Gauge
 
+
 class metric:
     def __init__(self, name, value=None, description=None):
         self.name = name
         if description is None:
             description = name.replace('_', ' ')
-        self.metric = Gauge('%s' % name.lower(), description )
+        self.metric = Gauge('%s' % name.lower(), description)
         if not value is None:
             self.value = value
             self.metric.set(value)
@@ -35,16 +36,19 @@ class metric:
         self.value = value
         self.metric.set(value)
 
+    def get_value(self):
+        return self.value
+
 
 class metric_label:
     def __init__(self, name, label, value=None, description=None):
         self.name = name
         self.values = dict()
         self.label_values = list()
+        self.label = label
         if description is None:
             description = name.replace('_', ' ')
-        self.metric = Gauge('%s' % name.lower(), description,
-                            [label])
+        self.metric = Gauge('%s' % name.lower(), description, [label])
         if not value is None:
             self.update_value(value)
 
@@ -58,6 +62,15 @@ class metric_label:
             if not label in value:
                 self.metric.labels(label).set(0)
 
+    def get_value(self):
+        return self.values
+
+    def get_label_values(self):
+        return self.label_values
+
+    def get_label(self):
+        return self.label
+
 
 class metric_labels:
     def __init__(self, name, labels, values=None, description=None):
@@ -66,11 +79,19 @@ class metric_labels:
         self.labels = labels
         if description is None:
             description = name.replace('_', ' ')
-        self.metric = Gauge('%s' % name.lower(), description,
-                            labels)
+        self.metric = Gauge('%s' % name.lower(), description, labels)
         if not values is None:
             print(values)
             self.update_value(values)
+
+    def get_value(self):
+        return values
+
+    def get_name(self):
+        return (name)
+
+    def get_labels(self):
+        return self.labels
 
     def __zero_missing_value(self, value):
         if isinstance(value, dict):
@@ -84,7 +105,8 @@ class metric_labels:
 
         for label in old_values:
             if not label in values:
-                old_values[label] = self.__zero_missing_value(old_values[label])
+                old_values[label] = self.__zero_missing_value(
+                    old_values[label])
             else:
                 if isinstance(old_values[label], dict):
                     old_values[label] = self.update_old_values(

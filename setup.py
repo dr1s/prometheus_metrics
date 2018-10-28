@@ -1,15 +1,17 @@
 import os
 from setuptools import setup, find_packages
 
+
 def read(fname):
-  return open(os.path.join(os.path.dirname(__file__), fname)).read()
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+
 
 with open('requirements.txt', 'r') as f:
-  requirements = f.readlines()
+    requirements = f.readlines()
 
 setup(
     name='prometheus_metrics',
-    version='0.1.2.1',
+    version='0.1.3',
     url='https://github.com/dr1s/prometheus_metrics',
     author='Daniel Schmitz',
     license='MIT',
@@ -19,7 +21,5 @@ setup(
     install_requires=requirements,
     packages=find_packages(),
     include_package_data=True,
-    entry_points={
-        'console_scripts': ['emby_exporter=emby_exporter:main']
-    },
+    entry_points={'console_scripts': ['emby_exporter=emby_exporter:main']},
 )
