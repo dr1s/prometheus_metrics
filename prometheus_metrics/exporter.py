@@ -31,8 +31,9 @@ class metrics_handler:
     def __init__(self):
         self.metrics = dict()
 
+    @classmethod
     def get_metrics_name(self):
-        return [*metrics]
+        return [*self.metrics]
 
     def update_metric(self, name, value):
         self.metrics[name].update_value(value)

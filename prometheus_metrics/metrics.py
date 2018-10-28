@@ -85,10 +85,10 @@ class metric_labels:
             self.update_value(values)
 
     def get_value(self):
-        return values
-
+        return self.values
+        
     def get_name(self):
-        return (name)
+        return self.name
 
     def get_labels(self):
         return self.labels
