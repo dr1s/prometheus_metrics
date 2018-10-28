@@ -70,6 +70,9 @@ class exporter:
         self.metrics_handler = metrics_handler()
         self.httpd = None
 
+    def make_wsgi_app(self):
+        make_wsgi_app()
+
     def make_server(self, interface, port):
         server_class = WSGIServer
 
@@ -78,7 +81,7 @@ class exporter:
                 server_class.address_family = socket.AF_INET6
 
         print("* Listening on %s:%s" % (interface, port))
-        self.httpd = make_server(interface, port, make_wsgi_app(),
+        self.httpd = make_server(interface, port, self.make_wsgi_app(),
                                  server_class, self._SilentHandler)
         t = threading.Thread(target=self.httpd.serve_forever)
         t.start()

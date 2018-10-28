@@ -8,3 +8,4 @@ upload:
 	twine upload dist/*
 install:
 	python3 setup.py install
+release: clean build upload
