@@ -20,10 +20,11 @@
 #   SOFTWARE.
 
 
-__VERSION__ = '0.1.1'
+__VERSION__ = '0.1.2'
 __AUTHOR__ = 'Daniel Schmitz'
 __NAME__ = 'prometheus_metrics'
 
 
 from prometheus_metrics.metrics import metric, metric_label, metric_labels
 from prometheus_metrics.exporter import metrics_handler, exporter
+from prometheus_client import generate_latest
