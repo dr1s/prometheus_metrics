@@ -19,7 +19,7 @@
 #   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #   SOFTWARE.
 
-__VERSION__ = '0.1.3.1.dev0'
+__VERSION__ = '0.1.4'
 __AUTHOR__ = 'Daniel Schmitz'
 __NAME__ = 'prometheus_metrics'
 
