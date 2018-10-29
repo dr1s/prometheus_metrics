@@ -70,15 +70,15 @@ class metrics_handler:
             self.add_metric(name)
         self.update_metric(name, value)
 
+    def add_update_metric_label(self, name, label, values):
+        if not self.exists(name):
+            self.add_metric_label(name, label)
+        self.update_metric(name, values)
+
     def add_update_metric_labels(self, name, labels, values):
         if not self.exists(name):
             self.add_metric_labels(name, labels)
         self.update_metric(name, values)
-
-    def add_update_metric(self, name, value, labels=None):
-        if not self.exists(name):
-            self.add_metric(name)
-        self.update_metric(name, value)
 
     def add_update(self, name, value, labels=None):
         if not self.exists(name):
