@@ -38,7 +38,7 @@ class metrics_handler:
     def update_metric(self, name, value):
         self.metrics[name].update_value(value)
 
-    def add_metric(self, name, labels=None, description=None):
+    def add_metric_no(self, name, labels=None, description=None):
         self.metrics[name] = metric(name, description=description)
 
     def add_metric_label(self, name, label, description=None):
@@ -47,15 +47,15 @@ class metrics_handler:
     def add_metric_labels(self, name, labels, description=None):
         self.metrics[name] = metric_labels(name, labels, description=description)
 
-    def add_metric_auto(self, name, labels=None, description=None):
+    def add_metric(self, name, labels=None, description=None):
         if labels is None:
-            self.add_metric(name, description=description)
+            self.add_metric_no(name, description=description)
         elif isinstance(labels, str):
             self.add_metric_label(name, labels, description=description)
         elif isinstance(labels, list):
             self.add_metric_labels(name, labels, description=description)
 
-    def add_update_metric_label(self, name, label, value):
+    def add_update_metric_no(self, name, label, value):
         if not name in self.metrics:
             self.add_metric_label(name, label)
         self.update_metric(name, value)
@@ -70,9 +70,9 @@ class metrics_handler:
             self.add_metric(name)
         self.update_metric(name, value)
 
-    def add_update_metric_auto(self, name, value, labels=None):
+    def add_update_metric(self, name, value, labels=None):
         if labels is None:
-            self.add_update_metric(name, value)
+            self.add_update_metric_no(name, value)
         elif isinstance(labels, str):
             self.add_metric_label(name, labels, value)
         elif isinstance(labels, list):
