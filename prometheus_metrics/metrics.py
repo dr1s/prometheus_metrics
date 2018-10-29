@@ -86,7 +86,7 @@ class metric_labels:
 
     def get_value(self):
         return self.values
-        
+
     def get_name(self):
         return self.name
 
@@ -127,11 +127,12 @@ class metric_labels:
 
         return old_values
 
-    def update_metrics(self, values, labels=[]):
+    def update_metrics(self, values, labels=None):
         for label in values:
             labels_tmp = list()
-            for i in labels:
-                labels_tmp.append(i)
+            if not labels is None:
+                for i in labels:
+                    labels_tmp.append(i)
             labels_tmp.append(label)
 
             if not isinstance(values[label], dict):
