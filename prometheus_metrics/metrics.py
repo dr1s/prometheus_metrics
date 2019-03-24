@@ -54,7 +54,7 @@ class metric_label:
             description = name.replace('_', ' ')
         self.metric = Gauge(name.lower(), description, [label])
         if not value is None:
-            self.update_value(value)
+            self.metric.labels(label).set(value)
 
     def update(self, value):
         for label in value:
@@ -65,10 +65,17 @@ class metric_label:
         for label in self.label_values:
             if not label in value:
                 self.metric.labels(label).set(0)
+                self.values[label] = 0
+            if self.values[label] < 1:
+                removable_labels.append(label)
+        for l in removable_labels:
+            self.metric.remove(label)
+            del(self.values[l])
 
     # Delete
     def update_value(self, value):
         self.update_value(value)
+        removable_labels = list()
 
     def get_value(self):
         return self.values
@@ -98,6 +105,39 @@ class metric_labels:
         else:
             value = 0
         return value
+
+    def __remove_empty_values(self, values):
+        removeable_values = list()
+        if isinstance(values, dict):
+            for label in values:
+                print(label)
+                if not isinstance(values[label], dict):
+                    if values[label] < 1:
+                        removeable_values.append(label)
+                else:
+                    values[label] = self.__remove_empty_values(values[label])
+                    if not values[label]:
+                        removeable_values.append(label)
+        for labels in removeable_values:
+            del values[label]
+        return values
+
+    def __remove_empty_label_sets(self, values, labels=None):
+        #print(values)
+        if not labels:
+            labels = list()
+        if isinstance(values, dict):
+            for label in values:
+                labels_new = labels.copy()
+                labels_new.append(label)
+                self.__remove_empty_label_sets(values[label], labels_new)
+        else:
+            print("values: %s" % values)
+            if values < 1:
+                print("labels: %s" % labels)
+                print(len(labels))
+                print(len(self.metric._labelnames))
+                self.metric.remove(*labels)
 
     def __update_old_values(self, old_values, values):
         for label in old_values:
@@ -159,7 +199,6 @@ class metric_labels:
         return self.labels
 
     def update(self, values):
-        values_tmp = self.values
         if isinstance(values, list):
             values_new = dict()
             for v in values:
@@ -168,10 +207,11 @@ class metric_labels:
                 values_new = self.__add_value_dict(values_new, v_temp,
                                                    metric_value)
                 values = values_new
-        values_tmp = self.__add_new_values(values_tmp, values)
-        values_tmp = self.__update_old_values(values_tmp, values)
-
-        self.__update_metrics(values_tmp)
+        self.values = self.__add_new_values(self.values, values)
+        self.values = self.__update_old_values(self.values, values)
+        self.__remove_empty_label_sets(self.values)
+        self.values = self.__remove_empty_values(self.values)
+        self.__update_metrics(self.values)
 
     # Delete
     def update_value(self, value):
