@@ -57,6 +57,7 @@ class metric_label:
             self.metric.labels(label).set(value)
 
     def update(self, value):
+        removable_labels = list()
         for label in value:
             self.values[label] = value[label]
             self.metric.labels(label).set(value[label])
