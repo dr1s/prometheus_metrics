@@ -56,8 +56,10 @@ class metric_label:
         if not value is None:
             self.metric.labels(label).set(value)
 
-    def update(self, value):
+    def update(self, value, remove_labels=True):
         removable_labels = list()
+        if len(self.values) < 1:
+            remove_labels = False
         for label in value:
             self.values[label] = value[label]
             self.metric.labels(label).set(value[label])
@@ -67,11 +69,12 @@ class metric_label:
             if not label in value:
                 self.metric.labels(label).set(0)
                 self.values[label] = 0
-            if self.values[label] < 1:
+            if self.values[label] == 0:
                 removable_labels.append(label)
-        for l in removable_labels:
-            self.metric.remove(label)
-            del(self.values[l])
+        if remove_labels:
+            for l in removable_labels:
+                self.metric.remove(label)
+                del(self.values[l])
 
     # Delete
     def update_value(self, value):
@@ -111,7 +114,6 @@ class metric_labels:
         removeable_values = list()
         if isinstance(values, dict):
             for label in values:
-                print(label)
                 if not isinstance(values[label], dict):
                     if values[label] < 1:
                         removeable_values.append(label)
@@ -133,11 +135,7 @@ class metric_labels:
                 labels_new.append(label)
                 self.__remove_empty_label_sets(values[label], labels_new)
         else:
-            print("values: %s" % values)
             if values < 1:
-                print("labels: %s" % labels)
-                print(len(labels))
-                print(len(self.metric._labelnames))
                 self.metric.remove(*labels)
 
     def __update_old_values(self, old_values, values):
