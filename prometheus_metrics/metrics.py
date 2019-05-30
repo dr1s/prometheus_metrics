@@ -106,7 +106,7 @@ class metric_labels:
 
     def __zero_missing_value(self, value):
         if isinstance(value, dict):
-            for label in values:
+            for label in value:
                 value[label] = self.__zero_missing_value(value[label])
         else:
             value = 0
