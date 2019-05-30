@@ -73,8 +73,10 @@ class metric_label:
                 removable_labels.append(label)
         if remove_labels:
             for l in removable_labels:
-                self.metric.remove(label)
-                del(self.values[l])
+                if l in self.label_values:
+                    self.metric.remove(l)
+                    del(self.values[l])
+                    self.label_values.remove(l)
 
     # Delete
     def update_value(self, value):
