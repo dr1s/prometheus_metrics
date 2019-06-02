@@ -103,6 +103,7 @@ class metric_labels:
         self.metric = Gauge(name.lower(), description, labels)
         if not values is None:
             self.update(values)
+        self.label_sets = list()
 
     def __zero_missing_value(self, value):
         if isinstance(value, dict):
@@ -138,7 +139,9 @@ class metric_labels:
                 self.__remove_empty_label_sets(values[label], labels_new)
         else:
             if values < 1:
-                self.metric.remove(*labels)
+                if labels in self.label_sets:
+                    self.metric.remove(*labels)
+                    del(self.label_sets[labels])
 
     def __update_old_values(self, old_values, values):
         for label in old_values:
@@ -174,6 +177,8 @@ class metric_labels:
             labels_tmp.append(label)
 
             if not isinstance(values[label], dict):
+                if not labels_tmp in self.label_sets:
+                    self.label_sets.append(labels_tmp)
                 self.metric.labels(*labels_tmp).set(values[label])
                 labels_tmp.pop()
             else:
