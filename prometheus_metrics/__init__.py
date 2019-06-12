@@ -19,9 +19,9 @@
 #   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #   SOFTWARE.
 
-__VERSION__ = '0.1.6.6.dev0'
-__AUTHOR__ = 'Daniel Schmitz'
-__NAME__ = 'prometheus_metrics'
+__VERSION__ = "0.1.6.6.dev0"
+__AUTHOR__ = "Daniel Schmitz"
+__NAME__ = "prometheus_metrics"
 
 from prometheus_metrics.metrics import metric, metric_label, metric_labels
 from prometheus_metrics.exporter import metrics_handler, exporter
