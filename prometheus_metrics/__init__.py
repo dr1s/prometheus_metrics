@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2018 Daniel Schmitz
+#   Copyright (c) 2018-2019 Daniel Schmitz
 #
 #   Permission is hereby granted, free of charge, to any person obtaining a copy
 #   of this software and associated documentation files (the "Software"), to deal
@@ -19,7 +19,7 @@
 #   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #   SOFTWARE.
 
-__VERSION__ = '0.1.6.5'
+__VERSION__ = '0.1.6.6.dev0'
 __AUTHOR__ = 'Daniel Schmitz'
 __NAME__ = 'prometheus_metrics'
 

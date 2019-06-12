@@ -11,7 +11,7 @@ with open('requirements.txt', 'r') as f:
 
 setup(
     name='prometheus_metrics',
-    version='0.1.6.5',
+    version='0.1.6.6.dev0',
     url='https://github.com/dr1s/prometheus_metrics',
     author='Daniel Schmitz',
     license='MIT',

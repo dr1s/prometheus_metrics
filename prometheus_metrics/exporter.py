@@ -44,10 +44,6 @@ class metrics_handler:
     def update(self, name, value):
         self.metrics[name].update(value)
 
-    # Delete
-    def update_metric(self, name, value):
-        self.update(value)
-
     def add_metric(self, name, description=None):
         self.metrics[name] = metric(name, description=description)
 

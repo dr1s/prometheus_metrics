@@ -36,10 +36,6 @@ class metric:
         self.value = value
         self.metric.set(value)
 
-    # Delete
-    def update_value(self, value):
-        self.update(value)
-
     def get_value(self):
         return self.value
 
@@ -77,11 +73,6 @@ class metric_label:
                     self.metric.remove(l)
                     del(self.values[l])
                     self.label_values.remove(l)
-
-    # Delete
-    def update_value(self, value):
-        self.update_value(value)
-        removable_labels = list()
 
     def get_value(self):
         return self.values
@@ -129,7 +120,6 @@ class metric_labels:
         return values
 
     def __remove_empty_label_sets(self, values, labels=None):
-        #print(values)
         if not labels:
             labels = list()
         if isinstance(values, dict):
@@ -218,7 +208,3 @@ class metric_labels:
         self.__remove_empty_label_sets(self.values)
         self.values = self.__remove_empty_values(self.values)
         self.__update_metrics(self.values)
-
-    # Delete
-    def update_value(self, value):
-        self.update(value)
